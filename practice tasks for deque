@@ -1,0 +1,301 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Unique Integers
+        System.out.println("\n=== 1. Unique Integers ===");
+        HashSet<Integer> uniqueInts = new HashSet<>();
+
+        System.out.print("Введите числа через пробел: ");
+        String[] parts = scanner.nextLine().trim().split("\\s+");
+        for (String p : parts) {
+            try {
+                uniqueInts.add(Integer.parseInt(p));
+            } catch (NumberFormatException ignored) {}
+        }
+
+        System.out.println("Уникальные значения: " + uniqueInts);
+
+
+        // 2. Check Membership
+        System.out.println("\n=== 2. Check Membership ===");
+        HashSet<String> allowedUsernames = new HashSet<>(Arrays.asList(
+                "alice", "bob", "charlie", "david", "emma"
+        ));
+
+        System.out.print("Введите имя для проверки: ");
+        String name = scanner.nextLine().trim().toLowerCase();
+
+        System.out.println("isAllowed: " + isAllowed(allowedUsernames, name));
+
+
+        // 3. Set Size & Emptiness
+        HashSet<Integer> numbers = new HashSet<>();
+        numbers.add(10);
+        numbers.add(20);
+        numbers.add(30);
+
+        System.out.println(numbers.size()); // 3
+
+        numbers.clear();
+
+        System.out.println(numbers.isEmpty()); // true
+
+
+
+        // 4. Remove Elements
+        System.out.println("\n=== 4. Remove Elements ===");
+        HashSet<String> names = new HashSet<>(Arrays.asList(
+                "Anna", "Bella", "Clara", "Dana", "Emma"
+        ));
+
+        System.out.println("Исходный набор: " + names);
+        System.out.print("Введите имя для удаления: ");
+        String toRemove = scanner.nextLine().trim();
+
+        boolean success = names.remove(toRemove);
+        System.out.println("Удаление успешно? " + success);
+        System.out.println("После удаления: " + names);
+
+
+        // 5. Bulk Add (addAll)
+        System.out.println("\n=== 5. Bulk Add (addAll) ===");
+        HashSet<Integer> set1 = new HashSet<>(Arrays.asList(1, 2, 3));
+        HashSet<Integer> set2 = new HashSet<>(Arrays.asList(3, 4, 5));
+
+        System.out.println("set1 до: " + set1);
+        set1.addAll(set2);
+        System.out.println("set1 после addAll: " + set1);
+
+
+        // 6. Bulk Remove (removeAll)
+        System.out.println("\n=== 6. Bulk Remove (removeAll) ===");
+        HashSet<Integer> A = new HashSet<>(Arrays.asList(1, 2, 3, 4, 5));
+        HashSet<Integer> B = new HashSet<>(Arrays.asList(3, 4, 6));
+
+        System.out.println("A до: " + A);
+        A.removeAll(B);
+        System.out.println("A после removeAll(B): " + A);
+
+
+        // 7. Retain Common (retainAll)
+        System.out.println("\n=== 7. Retain Common (retainAll) ===");
+        HashSet<Integer> X = new HashSet<>(Arrays.asList(10, 20, 30, 40));
+        HashSet<Integer> Y = new HashSet<>(Arrays.asList(30, 40, 50));
+
+        System.out.println("X до: " + X);
+        X.retainAll(Y);
+        System.out.println("X после retainAll(Y): " + X);
+
+
+        // 8. Contains All
+        System.out.println("\n=== 8. Contains All ===");
+        HashSet<String> setA = new HashSet<>(Arrays.asList("cat", "dog", "bird", "fish"));
+        HashSet<String> setB = new HashSet<>(Arrays.asList("dog", "bird"));
+
+        if (setA.containsAll(setB)) {
+            System.out.println("setA содержит все элементы setB ✓");
+        } else {
+            System.out.println("setA НЕ содержит все элементы setB");
+        }
+
+
+        // 9. Deduplicate Words
+        System.out.println("\n=== 9. Deduplicate Words ===");
+        System.out.print("Введите предложение: ");
+        String sentence = scanner.nextLine().trim();
+
+        String[] words = sentence.split("\\s+");
+        HashSet<String> uniqueWords = new HashSet<>(Arrays.asList(words));
+
+        System.out.println("Уникальные слова: " + uniqueWords);
+
+
+        // 10. Case-Insensitive Unique Words
+        System.out.println("\n=== 10. Case-Insensitive Unique Words ===");
+        System.out.print("Введите предложение (с разным регистром): ");
+        String text = scanner.nextLine().trim();
+
+        String[] caseWords = text.split("\\s+");
+        HashSet<String> lowerCaseUnique = new HashSet<>();
+
+        for (String w : caseWords) {
+            if (!w.isEmpty()) {
+                lowerCaseUnique.add(w.toLowerCase());
+            }
+        }
+
+        System.out.println("Уникальные слова (игнорируя регистр): " + lowerCaseUnique);
+
+
+        // 11. Basic Offer/Peek/Poll
+        System.out.println("\n=== 11. Basic Offer/Peek/Poll ===");
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+
+        queue.offer(10);
+        queue.offer(20);
+        queue.offer(30);
+
+        System.out.println("peek(): " + queue.peek());
+        System.out.println("poll(): " + queue.poll());
+        System.out.println("После poll: " + queue);
+
+
+        // 12. Stack Behavior
+
+        System.out.println("\n=== 12. Stack Behavior ===");
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+
+        stack.push(100);
+        stack.push(200);
+        stack.push(300);
+
+        System.out.print("Извлечение как из стека: ");
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop() + " ");
+        }
+        System.out.println();
+
+
+        // 13. Add First/Last
+        System.out.println("\n=== 13. Add First/Last ===");
+        ArrayDeque<Integer> dq = new ArrayDeque<>();
+
+        dq.addLast(1);
+        dq.addLast(2);
+        dq.addFirst(0);
+        dq.addLast(3);
+        dq.addFirst(-1);
+
+        System.out.print("Порядок элементов: ");
+        for (int n : dq) {
+            System.out.print(n + " ");
+        }
+        System.out.println();
+
+
+        // 14. Offer First/Last Return Value
+        System.out.println("\n=== 14. Offer First/Last Return Value ===");
+        ArrayDeque<String> deq = new ArrayDeque<>();
+
+        System.out.println("offerFirst(\"A\") → " + deq.offerFirst("A"));
+        System.out.println("offerLast(\"B\") → " + deq.offerLast("B"));
+        System.out.println("offerFirst(\"Z\") → " + deq.offerFirst("Z"));
+        System.out.println("Текущий deque: " + deq);
+
+
+        // 15. Peek Variants
+        System.out.println("\n=== 15. Peek Variants ===");
+        ArrayDeque<Integer> peekDeque = new ArrayDeque<>(Arrays.asList(5, 10, 15, 20));
+
+        System.out.println("peek():      " + peekDeque.peek());
+        System.out.println("peekFirst(): " + peekDeque.peekFirst());
+        System.out.println("peekLast():  " + peekDeque.peekLast());
+
+        ArrayDeque<Integer> emptyPeek = new ArrayDeque<>();
+        System.out.println("peek() на пустом: " + emptyPeek.peek());  // null
+
+
+        // 16. Poll Variants
+        System.out.println("\n=== 16. Poll Variants ===");
+        ArrayDeque<String> pollDeque = new ArrayDeque<>(Arrays.asList("X", "Y", "Z"));
+
+        System.out.println("poll():      " + pollDeque.poll());
+        System.out.println("pollFirst(): " + pollDeque.pollFirst());
+        System.out.println("pollLast():  " + pollDeque.pollLast());
+        System.out.println("poll() на пустом: " + pollDeque.poll());  // null
+
+
+        // 17. Remove First/Last Occurrence
+        System.out.println("\n=== 17. Remove First/Last Occurrence ===");
+        ArrayDeque<String> letters = new ArrayDeque<>(Arrays.asList("a", "b", "c", "b", "a"));
+        System.out.println("Исходный: " + letters);
+
+        letters.removeFirstOccurrence("b");
+        System.out.println("После removeFirstOccurrence(\"b\"): " + letters);
+
+        letters.removeLastOccurrence("a");
+        System.out.println("После removeLastOccurrence(\"a\"):  " + letters);
+
+
+        // 18. IsEmpty & Size
+        System.out.println("\n=== 18. IsEmpty & Size ===");
+        ArrayDeque<Integer> demo = new ArrayDeque<>();
+        System.out.println("Пуст? " + demo.isEmpty() + ", size: " + demo.size());
+
+        demo.add(7); demo.add(8);
+        System.out.println("Пуст? " + demo.isEmpty() + ", size: " + demo.size());
+
+        demo.remove();
+        System.out.println("Пуст? " + demo.isEmpty() + ", size: " + demo.size());
+
+
+        // 19. Clear Deque
+        System.out.println("\n=== 19. Clear Deque ===");
+        ArrayDeque<Integer> toClear = new ArrayDeque<>(Arrays.asList(1, 2, 3));
+        System.out.println("До clear: size = " + toClear.size());
+
+        toClear.clear();
+        System.out.println("После clear: size = " + toClear.size() +
+                ", isEmpty = " + toClear.isEmpty() +
+                ", peek = " + toClear.peek());
+
+
+        // 20. Palindrome Check (Deque)
+        System.out.println("\n=== 20. Palindrome Check (Deque) ===");
+        System.out.print("Введите строку: ");
+        String input = scanner.nextLine().trim().toLowerCase().replaceAll("[^a-z0-9]", "");
+
+        ArrayDeque<Character> palin = new ArrayDeque<>();
+        for (char c : input.toCharArray()) {
+            palin.addLast(c);
+        }
+
+        boolean isPalin = true;
+        while (palin.size() > 1) {
+            if (palin.pollFirst() != palin.pollLast()) {
+                isPalin = false;
+                break;
+            }
+        }
+
+        System.out.println("Это палиндром? " + isPalin);
+
+
+        // 21. Model Array task scheduler system
+        System.out.println("\n=== 21. Model Array task scheduler system ===");
+        ArrayDeque<String> tasks = new ArrayDeque<>();
+
+        addTask(tasks, "Обычная задача 1", false);
+        addTask(tasks, "Срочная задача A", true);
+        addTask(tasks, "Обычная задача 2", false);
+        addTask(tasks, "Срочная задача B", true);
+
+        System.out.println("\nОбработка задач (сначала срочные):");
+        while (!tasks.isEmpty()) {
+            System.out.println("Выполняется: " + processTask(tasks));
+        }
+
+        scanner.close();
+    }
+
+    // Вспомогательные методы
+    private static boolean isAllowed(HashSet<String> allowed, String name) {
+        return allowed.contains(name.toLowerCase());
+    }
+
+    private static void addTask(ArrayDeque<String> queue, String task, boolean highPriority) {
+        if (highPriority) {
+            queue.addFirst(task + " [HIGH PRIORITY]");
+        } else {
+            queue.addLast(task + " [normal]");
+        }
+        System.out.println("Добавлена: " + task + (highPriority ? " (срочно)" : ""));
+    }
+
+    private static String processTask(ArrayDeque<String> queue) {
+        return queue.pollFirst();
+    }
+}
