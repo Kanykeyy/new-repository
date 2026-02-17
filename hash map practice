@@ -1,0 +1,316 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        // 1. Create & Put
+
+        System.out.println("1. Create & Put");
+        Map<String, Integer> scores = new HashMap<>();
+        scores.put("Aida", 85);
+        scores.put("Azat", 92);
+        scores.put("Dana", 77);
+        System.out.println(scores);
+        System.out.println("Size: " + scores.size());
+        System.out.println();
+
+        // 2. Get & containsKey
+
+        System.out.println("2. Get & containsKey");
+        System.out.println("Aida: " + scores.get("Aida"));
+        System.out.println("Mira: " + scores.get("Mira"));           // null
+        System.out.println("Contains Mira? " + scores.containsKey("Mira"));
+        System.out.println();
+
+        // 3. Update existing value
+
+
+        System.out.println("3. Update existing value");
+        Integer oldDana = scores.put("Dana", 80);   // возвращает старое значение
+        System.out.println("Old Dana score: " + oldDana);
+        System.out.println("New map: " + scores);
+        System.out.println();
+
+        // 4. Remove by key
+
+
+        System.out.println("4. Remove");
+        System.out.println("Remove Azat: " + scores.remove("Azat"));
+        System.out.println("Remove NonExisting: " + scores.remove("NonExisting")); // null
+        System.out.println("After removes: " + scores);
+        System.out.println();
+
+
+        // 5. isEmpty & clear
+
+
+        System.out.println("5. isEmpty & clear");
+        System.out.println("Empty? " + scores.isEmpty());
+        scores.clear();
+        System.out.println("After clear -> Empty? " + scores.isEmpty());
+
+        // восстанавливаем для дальнейших примеров
+        scores.put("Aida", 85);
+        scores.put("Azat", 92);
+        scores.put("Dana", 80);
+        System.out.println();
+
+
+        // 6. getOrDefault
+
+
+        System.out.println("6. getOrDefault");
+        System.out.println("Mira: " + scores.getOrDefault("Mira", -1));
+        System.out.println("Aida: " + scores.getOrDefault("Aida", -1));
+        System.out.println();
+
+        // 7. putIfAbsent
+
+
+        System.out.println("7. putIfAbsent");
+        scores.putIfAbsent("Aida", 90);   // НЕ изменит (уже есть)
+        scores.putIfAbsent("Mira", 88);   // добавит
+        System.out.println(scores);
+        System.out.println();
+
+        // 8. replace
+
+
+        System.out.println("8. replace");
+        scores.replace("Aida", 85, 86);     // условная замена (старое значение должно совпадать)
+        System.out.println("After conditional replace: " + scores);
+
+        scores.replace("Aida", 91);         // безусловная
+        System.out.println("After unconditional replace: " + scores);
+        System.out.println();
+
+
+        // 9. Iterate over keys, values, entries
+
+
+        System.out.println("9. Iterate");
+        System.out.println("Keys:");
+        for (String key : scores.keySet()) {
+            System.out.println(key);
+        }
+
+        System.out.println("\nValues:");
+        for (Integer value : scores.values()) {
+            System.out.println(value);
+        }
+
+        System.out.println("\nEntries (key=value):");
+        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+            System.out.println(entry.getKey() + " → " + entry.getValue());
+        }
+        System.out.println();
+
+
+
+        // 10. Count how many have score >= 80
+
+
+        System.out.println("10. Count >= 80");
+        int count = 0;
+        for (int score : scores.values()) {
+            if (score >= 80) count++;
+        }
+        System.out.println("Students with >=80: " + count);
+        System.out.println();
+
+
+
+        // 11. Find max score and who has it
+
+
+        System.out.println("11. Max score");
+        int maxScore = Integer.MIN_VALUE;
+        String bestStudent = "";
+        for (Map.Entry<String, Integer> e : scores.entrySet()) {
+            if (e.getValue() > maxScore) {
+                maxScore = e.getValue();
+                bestStudent = e.getKey();
+            }
+        }
+        System.out.println("Best: " + bestStudent + " with " + maxScore);
+        System.out.println();
+
+
+
+        // 12. Word frequency
+
+
+        System.out.println("12. Word frequency");
+        String text = "Java fun and Java is powerful and fun";
+        String[] words = text.toLowerCase().split(" ");
+        Map<String, Integer> freq = new HashMap<>();
+        for (String w : words) {
+            freq.put(w, freq.getOrDefault(w, 0) + 1);
+        }
+        System.out.println(freq);
+        System.out.println();
+
+
+
+        // 13. Character frequency (Mississippi)
+
+
+        System.out.println("13. Char frequency");
+        String s = "Mississippi";
+        Map<Character, Integer> charFreq = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            charFreq.put(c, charFreq.getOrDefault(c, 0) + 1);
+        }
+        System.out.println(charFreq);
+        System.out.println();
+
+
+        // 14. Group words by length
+
+
+        System.out.println("14. Group by length");
+        String[] arr = {"hi", "book", "java", "sun", "loop", "map"};
+        Map<Integer, List<String>> byLength = new HashMap<>();
+        for (String w : arr) {
+            int len = w.length();
+            byLength.computeIfAbsent(len, k -> new ArrayList<>()).add(w);
+        }
+        System.out.println(byLength);
+        System.out.println();
+
+
+
+        // 16. Two-Sum
+
+        System.out.println("16. Two Sum");
+        int[] nums = {2, 7, 11, 15};
+        int target = 9;
+        Map<Integer, Integer> seen = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int need = target - nums[i];
+            if (seen.containsKey(need)) {
+                System.out.println("Indices: " + seen.get(need) + " and " + i);
+                break;
+            }
+            seen.put(nums[i], i);
+        }
+        System.out.println();
+
+
+
+        // 17. Detect duplicates
+
+
+        System.out.println("17. Detect duplicates");
+        String[] items = {"apple", "banana", "orange", "banana", "kiwi"};
+        Map<String, Integer> countItems = new HashMap<>();
+        for (String item : items) {
+            countItems.put(item, countItems.getOrDefault(item, 0) + 1);
+        }
+        System.out.println("All: " + countItems);
+        System.out.println("Duplicates:");
+        for (Map.Entry<String, Integer> e : countItems.entrySet()) {
+            if (e.getValue() > 1) {
+                System.out.println(e.getKey() + " → " + e.getValue());
+            }
+        }
+
+        System.out.println("\nDone.");
+
+
+
+
+     // 18. Equals & Order-Insensitivity
+    Map<String, Integer> map1 = new HashMap<>();
+        map1.put("Aida", 90);
+        map1.put("Azat", 80);
+        map1.put("Dana", 70);
+
+    Map<String, Integer> map2 = new HashMap<>();
+        map2.put("Dana", 70);
+        map2.put("Aida", 90);
+        map2.put("Azat", 80);
+
+        System.out.println("18:");
+        System.out.println("Equals: " + map1.equals(map2));
+        System.out.println("HashCode1: " + map1.hashCode());
+        System.out.println("HashCode2: " + map2.hashCode());
+        System.out.println();
+
+
+    // 19. Remove Entries Conditionally
+    Map<String, Integer> students = new HashMap<>();
+        students.put("Aida", 75);
+        students.put("Azat", 55);
+        students.put("Dana", 40);
+        students.put("Mira", 85);
+
+    Iterator<Map.Entry<String, Integer>> it = students.entrySet().iterator();
+        while (it.hasNext()) {
+        Map.Entry<String, Integer> entry = it.next();
+        if (entry.getValue() < 60) {
+            it.remove();
+        }
+    }
+
+        System.out.println("19:");
+        System.out.println("After removal: " + students);
+        System.out.println();
+
+
+    // 20. Merge Scores
+    Map<String, Integer> scores1 = new HashMap<>();
+        scores1.put("Aida", 40);
+        scores1.put("Azat", 35);
+        scores1.put("Dana", 50);
+
+    Map<String, Integer> scores2 = new HashMap<>();
+        scores2.put("Azat", 10);
+        scores2.put("Dana", 5);
+        scores2.put("Mira", 45);
+
+        for (Map.Entry<String, Integer> entry : scores2.entrySet()) {
+        scores1.merge(entry.getKey(), entry.getValue(), Integer::sum);
+    }
+
+        System.out.println("20:");
+        System.out.println("Merged scores: " + scores1);
+        System.out.println();
+
+
+    // 21. Invert Map (Handling Collisions)
+    Map<String, Integer> studentScore = new HashMap<>();
+        studentScore.put("Aida", 90);
+        studentScore.put("Azat", 80);
+        studentScore.put("Dana", 90);
+
+    Map<Integer, List<String>> scoreStudents = new HashMap<>();
+
+        for (Map.Entry<String, Integer> entry : studentScore.entrySet()) {
+        scoreStudents
+                .computeIfAbsent(entry.getValue(), k -> new ArrayList<>())
+                .add(entry.getKey());
+    }
+
+        System.out.println("21:");
+        System.out.println("Inverted map: " + scoreStudents);
+        System.out.println();
+
+
+    // 22. Top-2 Frequent Words
+    String text1 = "apple banana apple orange banana apple kiwi";
+
+    Map<String, Integer> freq1 = new HashMap<>();
+        for (String word : text.split(" ")) {
+        freq1.put(word, freq1.getOrDefault(word, 0) + 1);
+    }
+
+    List<Map.Entry<String, Integer>> list = new ArrayList<>(freq1.entrySet());
+        list.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+
+        System.out.println("22:");
+        for (int i = 0; i < Math.min(2, list.size()); i++) {
+        System.out.println(list.get(i).getKey() + " -> " + list.get(i).getValue());
+    }
+}
+}
